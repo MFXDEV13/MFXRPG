@@ -1,0 +1,8 @@
+prefix: '<gradient:#8B5CF6:#22D3EE><bold>MFX RPG</bold></gradient> <dark_gray>»</dark_gray>'
+
+common:
+  no-permission: '<prefix> <red>Kamu tidak memiliki izin untuk melakukan itu.</red>'
+  player-only: '<prefix> <red>Command ini hanya dapat digunakan oleh pemain.</red>'
+  reload-success: '<prefix> <green>Konfigurasi berhasil dimuat ulang.</green>'
+  economy-unavailable: '<prefix> <red>Vault atau provider ekonomi belum tersedia.</red>'
+  feature-coming-soon: '<prefix> <yellow>Fitur <white><feature></white> sedang disiapkan.</yellow>'

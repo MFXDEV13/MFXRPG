@@ -1,0 +1,45 @@
+settings:
+  starter-rank: "novice"
+  rankup-sound: "UI_TOAST_CHALLENGE_COMPLETE"
+  prestige:
+    enabled: true
+    reset-rank: "novice"
+    required-rank: "champion"
+    permanent-job-xp-bonus-per-level: 0.05
+
+ranks:
+  novice:
+    order: 1
+    display-name: "<gray><bold>NOVICE</bold></gray>"
+    icon: "STONE"
+    required-xp: 0
+    price: 0.0
+    benefits:
+      - "<gray>Awal perjalananmu di MFX RPG."
+  adventurer:
+    order: 2
+    display-name: "<gradient:#38BDF8:#6366F1><bold>ADVENTURER</bold></gradient>"
+    icon: "IRON_SWORD"
+    required-xp: 500
+    price: 1000.0
+    benefits:
+      - "<aqua>+ Akses reward Adventurer"
+      - "<aqua>+ Rank tag baru"
+  veteran:
+    order: 3
+    display-name: "<gradient:#A855F7:#06B6D4><bold>VETERAN</bold></gradient>"
+    icon: "DIAMOND_SWORD"
+    required-xp: 2500
+    price: 5000.0
+    benefits:
+      - "<light_purple>+ Akses reward Veteran"
+      - "<light_purple>+ Benefit server tambahan"
+  champion:
+    order: 4
+    display-name: "<gradient:#FACC15:#FB923C><bold>CHAMPION</bold></gradient>"
+    icon: "NETHERITE_SWORD"
+    required-xp: 7500
+    price: 15000.0
+    benefits:
+      - "<gold>+ Rank akhir sebelum Prestige"
+      - "<gold>+ Akses prestige"

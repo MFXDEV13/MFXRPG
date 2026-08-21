@@ -1,0 +1,74 @@
+settings:
+  max-active-jobs: 1
+  level:
+    base-xp: 100
+    growth-per-level: 1.35
+  payout:
+    enabled: true
+    actionbar: true
+
+jobs:
+  miner:
+    display-name: "<gradient:#94A3B8:#E2E8F0><bold>⛏ MINER</bold></gradient>"
+    icon: "DIAMOND_PICKAXE"
+    description:
+      - "<gray>Tambang ore untuk mendapatkan Coins dan Job XP."
+    actions:
+      block-break:
+        COAL_ORE: { money: 4.0, xp: 8 }
+        DEEPSLATE_COAL_ORE: { money: 4.0, xp: 8 }
+        IRON_ORE: { money: 8.0, xp: 15 }
+        DEEPSLATE_IRON_ORE: { money: 8.0, xp: 15 }
+        GOLD_ORE: { money: 12.0, xp: 22 }
+        DEEPSLATE_GOLD_ORE: { money: 12.0, xp: 22 }
+        REDSTONE_ORE: { money: 7.0, xp: 13 }
+        DEEPSLATE_REDSTONE_ORE: { money: 7.0, xp: 13 }
+        LAPIS_ORE: { money: 10.0, xp: 18 }
+        DEEPSLATE_LAPIS_ORE: { money: 10.0, xp: 18 }
+        DIAMOND_ORE: { money: 40.0, xp: 80 }
+        DEEPSLATE_DIAMOND_ORE: { money: 40.0, xp: 80 }
+        EMERALD_ORE: { money: 55.0, xp: 100 }
+        DEEPSLATE_EMERALD_ORE: { money: 55.0, xp: 100 }
+
+  farmer:
+    display-name: "<gradient:#34D399:#FACC15><bold>✿ FARMER</bold></gradient>"
+    icon: "GOLDEN_HOE"
+    description:
+      - "<gray>Panen tanaman untuk Coins dan Job XP."
+    actions:
+      block-break:
+        WHEAT: { money: 2.0, xp: 4 }
+        CARROTS: { money: 2.0, xp: 4 }
+        POTATOES: { money: 2.0, xp: 4 }
+        BEETROOTS: { money: 2.5, xp: 5 }
+        NETHER_WART: { money: 3.0, xp: 6 }
+        MELON: { money: 1.0, xp: 2 }
+        PUMPKIN: { money: 4.0, xp: 8 }
+        SUGAR_CANE: { money: 1.0, xp: 2 }
+
+  hunter:
+    display-name: "<gradient:#FB7185:#F59E0B><bold>⚔ HUNTER</bold></gradient>"
+    icon: "BOW"
+    description:
+      - "<gray>Kalahkan mob untuk Coins dan Job XP."
+    actions:
+      entity-kill:
+        ZOMBIE: { money: 5.0, xp: 10 }
+        SKELETON: { money: 6.0, xp: 12 }
+        CREEPER: { money: 9.0, xp: 18 }
+        SPIDER: { money: 5.0, xp: 10 }
+        ENDERMAN: { money: 18.0, xp: 35 }
+        BLAZE: { money: 15.0, xp: 30 }
+        WITCH: { money: 22.0, xp: 45 }
+
+  fisher:
+    display-name: "<gradient:#38BDF8:#22D3EE><bold>⚓ FISHER</bold></gradient>"
+    icon: "FISHING_ROD"
+    description:
+      - "<gray>Tangkap ikan untuk Coins dan Job XP."
+    actions:
+      fish-catch:
+        COD: { money: 6.0, xp: 12 }
+        SALMON: { money: 8.0, xp: 16 }
+        PUFFERFISH: { money: 12.0, xp: 24 }
+        TROPICAL_FISH: { money: 15.0, xp: 30 }

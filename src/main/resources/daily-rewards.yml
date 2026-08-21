@@ -1,0 +1,46 @@
+settings:
+  timezone: "Asia/Jakarta"
+  reset-on-missed-day: true
+  max-streak-day: 7
+
+rewards:
+  "1":
+    icon: "GOLD_NUGGET"
+    name: "<gradient:#FACC15:#FB923C><bold>HARI 1</bold></gradient>"
+    money: 100.0
+    commands: []
+  "2":
+    icon: "IRON_INGOT"
+    name: "<gradient:#FACC15:#FB923C><bold>HARI 2</bold></gradient>"
+    money: 200.0
+    commands: []
+  "3":
+    icon: "EMERALD"
+    name: "<gradient:#FACC15:#FB923C><bold>HARI 3</bold></gradient>"
+    money: 350.0
+    commands:
+      - "give %player% iron_ingot 8"
+  "4":
+    icon: "DIAMOND"
+    name: "<gradient:#FACC15:#FB923C><bold>HARI 4</bold></gradient>"
+    money: 500.0
+    commands:
+      - "give %player% diamond 2"
+  "5":
+    icon: "EXPERIENCE_BOTTLE"
+    name: "<gradient:#FACC15:#FB923C><bold>HARI 5</bold></gradient>"
+    money: 750.0
+    commands:
+      - "xp add %player% 15 levels"
+  "6":
+    icon: "GOLDEN_APPLE"
+    name: "<gradient:#FACC15:#FB923C><bold>HARI 6</bold></gradient>"
+    money: 1000.0
+    commands:
+      - "give %player% golden_apple 2"
+  "7":
+    icon: "NETHER_STAR"
+    name: "<gradient:#FACC15:#FB923C><bold>HARI 7</bold></gradient>"
+    money: 2500.0
+    commands:
+      - "give %player% diamond 5"
