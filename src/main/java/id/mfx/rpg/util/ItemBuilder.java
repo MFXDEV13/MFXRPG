@@ -27,9 +27,7 @@ public final class ItemBuilder {
     }
 
     public ItemBuilder itemModel(String namespace, String key) {
-        ItemMeta meta = item.getItemMeta();
         meta.setItemModel(new NamespacedKey(namespace, key));
-        item.setItemMeta(meta);
         return this;
     }
 
@@ -38,25 +36,35 @@ public final class ItemBuilder {
         return this;
     }
 
-    public ItemBuilder name(String miniMessage, Map<String, Component> placeholders) {
+    public ItemBuilder name(
+            String miniMessage,
+            Map<String, Component> placeholders
+    ) {
         meta.displayName(text.parse(miniMessage, placeholders));
         return this;
     }
 
     public ItemBuilder lore(List<String> miniMessageLines) {
         List<Component> lines = new ArrayList<>();
+
         for (String line : miniMessageLines) {
             lines.add(text.parse(line));
         }
+
         meta.lore(lines);
         return this;
     }
 
-    public ItemBuilder lore(List<String> miniMessageLines, Map<String, Component> placeholders) {
+    public ItemBuilder lore(
+            List<String> miniMessageLines,
+            Map<String, Component> placeholders
+    ) {
         List<Component> lines = new ArrayList<>();
+
         for (String line : miniMessageLines) {
             lines.add(text.parse(line, placeholders));
         }
+
         meta.lore(lines);
         return this;
     }
