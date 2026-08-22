@@ -42,6 +42,13 @@ commands:
   mfxrpg:
     usage: /mfxrpg reload
     permission: mfxrpg.admin
+  crate:
+    usage: /crate [crateId]
+    permission: mfxrpg.crate.use
+  battlepass:
+    aliases: [ bp ]
+    usage: /battlepass
+    permission: mfxrpg.battlepass.use
 
 permissions:
   mfxrpg.use:

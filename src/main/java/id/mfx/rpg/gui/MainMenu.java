@@ -64,6 +64,8 @@ public final class MainMenu extends BaseMenu {
         player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.7F, 1.2F);
         switch (action) {
             case "close" -> player.closeInventory();
+            case "crates" -> player.openInventory(new CrateGui(plugin.crateService()).getInventory());
+            case "battle-pass" -> player.openInventory(new BattlePassGui(plugin.battlePassService()).getInventory());
             case "rank" -> new RankMenu(plugin).open(player);
             case "jobs" -> new JobsMenu(plugin).open(player);
             case "daily" -> new DailyMenu(plugin).open(player);

@@ -15,16 +15,20 @@ public final class DatabaseManager {
     private final JavaPlugin plugin;
     private final ExecutorService executor;
     private final String url;
+
     private Connection connection;
 
     public DatabaseManager(JavaPlugin plugin, String databaseFileName) {
         this.plugin = plugin;
+
         this.executor = Executors.newSingleThreadExecutor(task -> {
             Thread thread = new Thread(task, "MFXRPG-SQLite");
             thread.setDaemon(true);
             return thread;
         });
-        this.url = "jdbc:sqlite:" + new File(plugin.getDataFolder(), databaseFileName).getAbsolutePath();
+
+        this.url = "jdbc:sqlite:"
+                + new File(plugin.getDataFolder(), databaseFileName).getAbsolutePath();
     }
 
     public void connectAndMigrate() throws SQLException {
@@ -33,9 +37,11 @@ public final class DatabaseManager {
         }
 
         connection = DriverManager.getConnection(url);
+
         try (Statement statement = connection.createStatement()) {
             statement.execute("PRAGMA journal_mode=WAL");
             statement.execute("PRAGMA foreign_keys=ON");
+            statement.execute("PRAGMA busy_timeout=5000");
 
             statement.execute("""
                     CREATE TABLE IF NOT EXISTS player_profiles (
@@ -83,7 +89,7 @@ public final class DatabaseManager {
                     CREATE TABLE IF NOT EXISTS player_crate_pity (
                         uuid TEXT NOT NULL,
                         crate_id TEXT NOT NULL,
-                        misses INTEGER NOT NULL DEFAULT 0,
+                        misses INTEGER NOT NULL DEFAULT 0 CHECK (misses >= 0),
                         PRIMARY KEY (uuid, crate_id),
                         FOREIGN KEY (uuid) REFERENCES player_profiles(uuid) ON DELETE CASCADE
                     )
@@ -97,6 +103,16 @@ public final class DatabaseManager {
                         reward_id TEXT NOT NULL,
                         rarity TEXT NOT NULL,
                         opened_at INTEGER NOT NULL,
+                        FOREIGN KEY (uuid) REFERENCES player_profiles(uuid) ON DELETE CASCADE
+                    )
+                    """);
+
+            statement.execute("""
+                    CREATE TABLE IF NOT EXISTS player_crate_keys (
+                        uuid TEXT NOT NULL,
+                        crate_id TEXT NOT NULL,
+                        amount INTEGER NOT NULL DEFAULT 0 CHECK (amount >= 0),
+                        PRIMARY KEY (uuid, crate_id),
                         FOREIGN KEY (uuid) REFERENCES player_profiles(uuid) ON DELETE CASCADE
                     )
                     """);
@@ -136,6 +152,39 @@ public final class DatabaseManager {
                         FOREIGN KEY (uuid) REFERENCES player_profiles(uuid) ON DELETE CASCADE
                     )
                     """);
+
+            statement.execute("""
+                    CREATE TABLE IF NOT EXISTS battlepass_progress (
+                        uuid TEXT NOT NULL,
+                        season_id TEXT NOT NULL,
+                        xp INTEGER NOT NULL DEFAULT 0 CHECK (xp >= 0),
+                        updated_at INTEGER NOT NULL,
+                        PRIMARY KEY (uuid, season_id),
+                        FOREIGN KEY (uuid) REFERENCES player_profiles(uuid) ON DELETE CASCADE
+                    )
+                    """);
+
+            statement.execute("""
+                    CREATE TABLE IF NOT EXISTS battlepass_claims (
+                        uuid TEXT NOT NULL,
+                        season_id TEXT NOT NULL,
+                        level INTEGER NOT NULL CHECK (level > 0),
+                        track TEXT NOT NULL CHECK (track IN ('free', 'premium')),
+                        claimed_at INTEGER NOT NULL,
+                        PRIMARY KEY (uuid, season_id, level, track),
+                        FOREIGN KEY (uuid) REFERENCES player_profiles(uuid) ON DELETE CASCADE
+                    )
+                    """);
+
+            statement.execute("""
+                    CREATE INDEX IF NOT EXISTS idx_crate_open_history_uuid_opened_at
+                    ON crate_open_history(uuid, opened_at DESC)
+                    """);
+
+            statement.execute("""
+                    CREATE INDEX IF NOT EXISTS idx_battlepass_progress_uuid_season
+                    ON battlepass_progress(uuid, season_id)
+                    """);
         }
     }
 
@@ -147,18 +196,53 @@ public final class DatabaseManager {
         if (connection == null) {
             throw new IllegalStateException("Database belum tersambung.");
         }
+
         return connection;
+    }
+
+    public <T> T inTransaction(SqlWork<T> work) throws SQLException {
+        Connection current = connection();
+        boolean previousAutoCommit = current.getAutoCommit();
+
+        current.setAutoCommit(false);
+
+        try {
+            T result = work.execute(current);
+            current.commit();
+            return result;
+        } catch (SQLException | RuntimeException exception) {
+            try {
+                current.rollback();
+            } catch (SQLException rollbackException) {
+                exception.addSuppressed(rollbackException);
+            }
+
+            throw exception;
+        } finally {
+            current.setAutoCommit(previousAutoCommit);
+        }
+    }
+
+    @FunctionalInterface
+    public interface SqlWork<T> {
+        T execute(Connection connection) throws SQLException;
     }
 
     public void close() {
         executor.shutdown();
+
         if (connection == null) {
             return;
         }
+
         try {
             connection.close();
         } catch (SQLException exception) {
-            plugin.getLogger().warning("Gagal menutup SQLite: " + exception.getMessage());
+            plugin.getLogger().warning(
+                    "Gagal menutup SQLite: " + exception.getMessage()
+            );
+        } finally {
+            connection = null;
         }
     }
 }

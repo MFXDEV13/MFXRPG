@@ -6,3 +6,21 @@ common:
   reload-success: '<prefix> <green>Konfigurasi berhasil dimuat ulang.</green>'
   economy-unavailable: '<prefix> <red>Vault atau provider ekonomi belum tersedia.</red>'
   feature-coming-soon: '<prefix> <yellow>Fitur <white><feature></white> sedang disiapkan.</yellow>'
+
+crate:
+  unknown: "&cCrate tidak ditemukan."
+  no-key: "&cKamu tidak memiliki key untuk crate ini."
+  opened: "&aKamu membuka &f%crate%&a dan mendapat %reward%&a!"
+  pity: "&dPity aktif: hadiah langka dijamin!"
+  cooldown: "&cTunggu %seconds% detik sebelum membuka crate ini lagi."
+  key-received: "&aKamu menerima %amount%x %crate% key."
+  key-removed: "&c%amount%x %crate% key dihapus."
+  history-empty: "&7Belum ada riwayat crate."
+
+battlepass:
+  xp-added: "&b+%amount% Battle Pass XP"
+  claimed: "&aReward Battle Pass level %level% (%track%) berhasil diklaim."
+  already-claimed: "&cReward ini sudah diklaim."
+  locked: "&cLevel Battle Pass kamu belum cukup."
+  premium-required: "&cKamu membutuhkan Battle Pass Premium untuk reward ini."
+  season-changed: "&eSeason Battle Pass telah berubah. Progres baru dibuat."
