@@ -26,6 +26,13 @@ public final class ItemBuilder {
         this.meta = item.getItemMeta();
     }
 
+    public ItemBuilder itemModel(String namespace, String key) {
+        ItemMeta meta = item.getItemMeta();
+        meta.setItemModel(new NamespacedKey(namespace, key));
+        item.setItemMeta(meta);
+        return this;
+    }
+
     public ItemBuilder name(String miniMessage) {
         meta.displayName(text.parse(miniMessage));
         return this;
