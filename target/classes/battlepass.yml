@@ -1,0 +1,68 @@
+season:
+  id: "season_1"
+  display-name: "&6Season 1"
+  max-level: 20
+  xp-per-level: 1_000
+  premium-permission: "mfxrpg.battlepass.premium"
+  xp-sources:
+    quest-claim: 100
+    daily-claim: 50
+    job-level-up: 150
+    crate-open: 25
+
+rewards:
+  1:
+    free:
+      display-name: "&e500 Coins"
+      material: GOLD_NUGGET
+      commands:
+        - "eco give %player% 500"
+    premium:
+      display-name: "&d2 Adventurer Keys"
+      material: TRIPWIRE_HOOK
+      commands:
+        - "crate give %player% adventurer 2"
+  2:
+    free:
+      display-name: "&b250 Rank XP"
+      material: EXPERIENCE_BOTTLE
+      commands:
+        - "mfxrpg addrankxp %player% 250"
+    premium:
+      display-name: "&e1,000 Coins"
+      material: GOLD_INGOT
+      commands:
+        - "eco give %player% 1000"
+  3:
+    free:
+      display-name: "&a1 Adventurer Key"
+      material: TRIPWIRE_HOOK
+      commands:
+        - "crate give %player% adventurer 1"
+    premium:
+      display-name: "&6Champion Key"
+      material: TRIPWIRE_HOOK
+      commands:
+        - "crate give %player% champion 1"
+  4:
+    free:
+      display-name: "&e1,500 Coins"
+      material: GOLD_INGOT
+      commands:
+        - "eco give %player% 1500"
+    premium:
+      display-name: "&dEpic Key"
+      material: AMETHYST_SHARD
+      commands:
+        - "crate give %player% adventurer 3"
+  5:
+    free:
+      display-name: "&b750 Rank XP"
+      material: EXPERIENCE_BOTTLE
+      commands:
+        - "mfxrpg addrankxp %player% 750"
+    premium:
+      display-name: "&6Champion Bundle"
+      material: NETHER_STAR
+      commands:
+        - "crate give %player% champion 2"
