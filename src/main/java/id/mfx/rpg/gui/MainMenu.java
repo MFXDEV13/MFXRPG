@@ -58,7 +58,7 @@ public final class MainMenu extends BaseMenu {
         addResourceButton(inventory, "rank", "rank", "rank_prestige", 10);
         addResourceButton(inventory, "jobs", "jobs", "jobs_menu", 11);
         addResourceButton(inventory, "quests", "quests", "quests_menu", 12);
-        addResourceButton(inventory, "daily", "daily", "daily_reward", 14);
+        addResourceButton(inventory, "daily", "daily", "daily_menu", 14);
         addResourceButton(
                 inventory,
                 "achievements",
