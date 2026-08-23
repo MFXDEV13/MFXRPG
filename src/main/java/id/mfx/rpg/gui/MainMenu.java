@@ -52,46 +52,26 @@ public final class MainMenu extends BaseMenu {
                 .map(economy -> economy.getBalance(player))
                 .orElse(0.0D);
 
-        ConfigurationSection profile = plugin.theme().getConfigurationSection("profile");
+        renderProfile(player, inventory, balance);
 
-        if (profile != null) {
-            set(
-                    inventory,
-                    4,
-                    new ItemBuilder(plugin, Material.PLAYER_HEAD)
-                            .name(
-                                    profile.getString("name"),
-                                    Map.of(
-                                            "player", Component.text(player.getName()),
-                                            "balance", Component.text(
-                                                    BALANCE_FORMAT.format(balance)
-                                            )
-                                    )
-                            )
-                            .lore(
-                                    profile.getStringList("lore"),
-                                    Map.of(
-                                            "player", Component.text(player.getName()),
-                                            "balance", Component.text(
-                                                    BALANCE_FORMAT.format(balance)
-                                            )
-                                    )
-                            )
-                            .action("profile")
-                            .build()
-            );
-        }
+        // Baris kedua: progression dan aktivitas RPG.
+        addResourceButton(inventory, "rank", "rank", "rank_prestige", 10);
+        addResourceButton(inventory, "jobs", "jobs", "jobs_menu", 11);
+        addResourceButton(inventory, "quests", "quests", "quests_menu", 12);
+        addResourceButton(inventory, "daily", "daily", "daily_reward", 14);
+        addResourceButton(
+                inventory,
+                "achievements",
+                "achievements",
+                "reward_claimed",
+                15
+        );
+        addResourceButton(inventory, "top", "top", "hall_of_fame", 16);
 
-        addButton(inventory, "rank", "rank");
-        addButton(inventory, "jobs", "jobs");
-        addButton(inventory, "quests", "quests");
-        addButton(inventory, "daily", "daily");
-        addButton(inventory, "achievements", "achievements");
-        addButton(inventory, "top", "top");
-
+        // Baris ketiga: fitur utama Paket 4.
         set(
                 inventory,
-                38,
+                29,
                 new ItemBuilder(plugin, Material.PAPER)
                         .name("<gradient:gold:yellow>Crates</gradient>")
                         .lore(List.of(
@@ -106,11 +86,11 @@ public final class MainMenu extends BaseMenu {
 
         set(
                 inventory,
-                40,
+                33,
                 new ItemBuilder(plugin, Material.PAPER)
                         .name("<gradient:#dba9ff:#ff77d9>Battle Pass</gradient>")
                         .lore(List.of(
-                                "<gray>Lihat progres dan klaim reward season.</gray>",
+                                "<gray>Lihat progres season dan klaim reward.</gray>",
                                 "",
                                 "<yellow>Klik untuk membuka</yellow>"
                         ))
@@ -119,39 +99,91 @@ public final class MainMenu extends BaseMenu {
                         .build()
         );
 
-        addButton(inventory, "settings", "settings");
+        // Bagian utilitas.
+        addResourceButton(
+                inventory,
+                "settings",
+                "settings",
+                "settings_menu",
+                40
+        );
 
         set(
                 inventory,
                 49,
-                new ItemBuilder(plugin, Material.BARRIER)
-                        .name(plugin.theme().getString("common.close.name"))
-                        .lore(plugin.theme().getStringList("common.close.lore"))
+                new ItemBuilder(plugin, Material.PAPER)
+                        .name("<red>Tutup Menu</red>")
+                        .lore(List.of("<gray>Klik untuk menutup menu RPG.</gray>"))
+                        .itemModel("mfxrpg", "close_menu")
                         .action("close")
                         .build()
         );
     }
 
-    private void addButton(Inventory inventory, String key, String action) {
-        ConfigurationSection section = plugin.theme().getConfigurationSection(key);
+    private void renderProfile(
+            Player player,
+            Inventory inventory,
+            double balance
+    ) {
+        ConfigurationSection profile = plugin.theme()
+                .getConfigurationSection("profile");
+
+        if (profile == null) {
+            return;
+        }
+
+        set(
+                inventory,
+                4,
+                new ItemBuilder(plugin, Material.PAPER)
+                        .name(
+                                profile.getString(
+                                        "name",
+                                        "<gradient:#dba9ff:#ff77d9>%player%</gradient>"
+                                ),
+                                Map.of(
+                                        "player", Component.text(player.getName()),
+                                        "balance", Component.text(
+                                                BALANCE_FORMAT.format(balance)
+                                        )
+                                )
+                        )
+                        .lore(
+                                profile.getStringList("lore"),
+                                Map.of(
+                                        "player", Component.text(player.getName()),
+                                        "balance", Component.text(
+                                                BALANCE_FORMAT.format(balance)
+                                        )
+                                )
+                        )
+                        .itemModel("mfxrpg", "profile_menu")
+                        .action("profile")
+                        .build()
+        );
+    }
+
+    private void addResourceButton(
+            Inventory inventory,
+            String themeKey,
+            String action,
+            String modelId,
+            int slot
+    ) {
+        ConfigurationSection section = plugin.theme()
+                .getConfigurationSection(themeKey);
 
         if (section == null) {
             return;
         }
 
-        Material material = Material.matchMaterial(
-                section.getString("material", "STONE")
-        );
-
         set(
                 inventory,
-                section.getInt("slot"),
-                new ItemBuilder(
-                        plugin,
-                        material == null ? Material.STONE : material
-                )
-                        .name(section.getString("name"))
+                slot,
+                new ItemBuilder(plugin, Material.PAPER)
+                        .name(section.getString("name", "<white>" + themeKey + "</white>"))
                         .lore(section.getStringList("lore"))
+                        .itemModel("mfxrpg", modelId)
                         .action(action)
                         .build()
         );
